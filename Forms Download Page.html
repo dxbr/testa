@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Downloadable Forms - Sri Lanka Post</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+
+        /* Header Navigation */
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .top-header {
+            background: rgba(0,0,0,0.1);
+            padding: 8px 0;
+            font-size: 14px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .top-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .lang-selector {
+            display: flex;
+            gap: 10px;
+        }
+
+        .lang-selector a {
+            color: white;
+            text-decoration: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .lang-selector a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .main-nav {
+            padding: 15px 0;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #2a5298;
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            align-items: center;
+            gap: 26px;
+            height: 100%;
+        }
+
+        .nav-item {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            transition: all 0.3s;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            line-height: 1.2;
+            font-size: 16px;
+        }
+
+        .nav-link:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-2px);
+        }
+
+        .nav-link.active {
+            background: rgba(255,255,255,0.2);
+            border-bottom: 3px solid #ffd700;
+        }
+
+        .dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            border-radius: 8px;
+            min-width: 250px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+
+        .nav-item:hover .dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            padding: 12px 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item a {
+            color: #333;
+            text-decoration: none;
+            display: block;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .dropdown-item a:hover {
+            color: #2a5298;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .search-box {
+            display: flex;
+            background: rgba(255,255,255,0.1);
+            border-radius: 25px;
+            padding: 8px 15px;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .search-box:focus-within {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .search-box input {
+            background: none;
+            border: none;
+            color: white;
+            outline: none;
+            width: 200px;
+            font-size: 14px;
+        }
+
+        .search-box input::placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 4px;
+            transition: background 0.3s;
+            line-height: 1;
+        }
+
+        .mobile-menu-toggle:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 42px;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .page-header p {
+            font-size: 18px;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 60px 0;
+        }
+
+        .forms-intro {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .forms-intro h2 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .forms-intro p {
+            font-size: 16px;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .forms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .form-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            border-left: 4px solid #2a5298;
+            position: relative;
+        }
+
+        .form-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .form-icon {
+            width: 60px;
+            height: 60px;
+            background: #e8f4f8;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #2a5298;
+            margin-bottom: 20px;
+        }
+
+        .form-card h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .form-card p {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .form-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 10px 0;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+        }
+
+        .form-size {
+            font-size: 14px;
+            color: #888;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .form-language {
+            font-size: 12px;
+            background: #f0f0f0;
+            padding: 3px 8px;
+            border-radius: 12px;
+            color: #666;
+        }
+
+        .download-btn {
+            background: #2a5298;
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .download-btn:hover {
+            background: #1e3c72;
+            transform: translateY(-2px);
+        }
+
+        .download-btn:focus {
+            outline: 2px solid #ffd700;
+            outline-offset: 2px;
+        }
+
+        /* Category Filters */
+        .category-filters {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: white;
+            border: 2px solid #2a5298;
+            color: #2a5298;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: #2a5298;
+            color: white;
+        }
+
+        /* Help Section */
+        .help-section {
+            background: #f8f9fa;
+            padding: 40px 0;
+            margin-top: 60px;
+        }
+
+        .help-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .help-content h3 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .help-content p {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+
+        .help-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .help-btn {
+            background: #ffd700;
+            color: #333;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .help-btn:hover {
+            background: #ffed4a;
+            transform: translateY(-2px);
+        }
+
+        .help-btn.secondary {
+            background: white;
+            color: #2a5298;
+            border: 2px solid #2a5298;
+        }
+
+        .help-btn.secondary:hover {
+            background: #2a5298;
+            color: white;
+        }
+
+        /* Footer */
+        .footer {
+            background: #1e3c72;
+            color: white;
+            padding: 40px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 20px;
+            color: #ffd700;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section ul li a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section ul li a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 20px;
+            text-align: center;
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .top-info {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+
+            .lang-selector {
+                justify-content: center;
+            }
+
+            .nav-content {
+                position: relative;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: #1e3c72;
+                flex-direction: column;
+                padding: 100px 20px 20px;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+                overflow-y: auto;
+                z-index: 999;
+            }
+
+            .nav-menu.active {
+                transform: translateX(0);
+            }
+
+            .nav-item {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+
+            .nav-link {
+                width: 100%;
+                justify-content: flex-start;
+                padding: 15px 20px;
+                border-radius: 8px;
+            }
+
+            .dropdown {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                box-shadow: none;
+                background: rgba(255,255,255,0.1);
+                margin-top: 10px;
+                border-radius: 8px;
+                display: none;
+            }
+
+            .dropdown.active {
+                display: block;
+            }
+
+            .dropdown-item a {
+                color: rgba(255,255,255,0.9);
+                padding: 10px 15px;
+            }
+
+            .mobile-menu-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .search-box {
+                display: none;
+            }
+
+            .logo-text {
+                font-size: 20px;
+            }
+
+            .page-header h1 {
+                font-size: 28px;
+            }
+
+            .page-header p {
+                font-size: 16px;
+            }
+
+            .forms-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .category-filters {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .help-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            .form-card {
+                padding: 20px;
+            }
+
+            .page-header {
+                padding: 40px 0;
+            }
+
+            .main-content {
+                padding: 40px 0;
+            }
+
+            .help-section {
+                padding: 30px 0;
+            }
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* Focus styles for accessibility */
+        .nav-link:focus,
+        .search-box input:focus,
+        .filter-btn:focus,
+        .help-btn:focus,
+        .mobile-menu-toggle:focus {
+            outline: 2px solid #ffd700;
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header class="header">
+        <div class="top-header">
+            <div class="container">
+                <div class="top-info">
+                    <div class="lang-selector">
+                        <a href="#" aria-label="Switch to English">EN</a>
+                        <a href="#" aria-label="Switch to Sinhala">සිං</a>
+                        <a href="#" aria-label="Switch to Tamil">தமிழ்</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <nav class="main-nav" role="navigation" aria-label="Main navigation">
+            <div class="container">
+                <div class="nav-content">
+                    <div class="logo">
+                        <div class="logo-icon">SL</div>
+                        <div class="logo-text">Sri Lanka Post</div>
+                    </div>
+                    
+                    <ul class="nav-menu" id="navMenu">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">About Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link nav-dropdown-trigger">Services</a>
+                            <div class="dropdown">
+                                <div class="dropdown-item">
+                                    <a href="#">Domestic Mail</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#">International Mail</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#">Money Orders</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#">Courier Services</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#">EMS Services</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#">Bill Payments</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#">Banking Services</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">Track & Trace</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">Notices</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link active" aria-current="page">Forms</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">Contact Us</a>
+                        </li>
+                    </ul>
+                    
+                    <div class="search-container">
+                        <div class="search-box">
+                            <span>🔍</span>
+                            <input type="text" placeholder="Search forms..." aria-label="Search forms">
+                        </div>
+                        <button class="mobile-menu-toggle" aria-label="Toggle mobile menu" id="mobileMenuToggle">
+                            ☰
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Downloadable Forms</h1>
+            <p>Access all official forms and documents for Sri Lanka Post services. Download, print, and complete forms for your postal needs.</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <div class="forms-intro">
+                <h2>All Forms & Documents</h2>
+                <p>Browse through our collection of official forms organized by category. All forms are available in PDF format and can be downloaded instantly.</p>
+            </div>
+
+            <!-- Category Filters -->
+            <div class="category-filters">
+                <button class="filter-btn active" data-category="all">All Forms</button>
+                <button class="filter-btn" data-category="mail">Mail Services</button>
+                <button class="filter-btn" data-category="money">Money Orders</button>
+                <button class="filter-btn" data-category="courier">Courier & EMS</button>
+                <button class="filter-btn" data-category="banking">Banking Services</button>
+                <button class="filter-btn" data-category="other">Other Services</button>
+            </div>
+
+            <!-- Forms Grid -->
+            <div class="forms-grid">
+                <!-- Mail Services Forms -->
+                <div class="form-card" data-category="mail">
+                    <div class="form-icon">📮</div>
+                    <h3>Domestic Mail Registration Form</h3>
+                    <p>Register for domestic mail services including letters, parcels, and registered mail within Sri Lanka.</p>
+                    <div class="form-meta">
+                        <span class="form-size">📄 PDF • 250KB</span>
+                        <span class="form-language">EN/සිං/தமிழ்</span>
+                    </div>
+                    <a href="#" class="download-btn" aria-label="Download Domestic Mail Registration Form">
+                        ⬇️ Download PDF
+                    </a>
+                </div>
+
+                <div class="form-card" data-category="mail">
+                    <div class="form-icon">🌍</div>
+                    <h3>International Mail Declaration Form</h3>
+                    <p>Required customs declaration form for sending international mail and packages to destinations worldwide.</p>
+                    <div class="form-meta">
+                        <span class="form-size">📄 PDF • 180KB</span>
+                        <span class="form-language">EN</span>
+                    </div>
+                    <a href="#" class="download-btn" aria-label="Download International Mail Declaration Form">
+                        ⬇️ Download PDF
+                    </a>
+                </div>
+
+                <div class="form-card" data-category="mail">
+                    <div class="form-icon">📋</div>
+                    <h3>Change of Address Form</h3>
+                    <p>Notify Sri Lanka Post of your address change to ensure continued mail delivery to your new location.</p>
+                    <div class="form-meta">
+                        <span class="form-size">📄 PDF • 120KB</span>
+                        <span class="form-language">EN/සිං/தமிழ்</span>
+                    </div>
+                    <a href="#" class="download-btn" aria-label="Download Change of Address Form">
+                        ⬇️ Download PDF
+                    </a>
+                </div>
+
+                <!-- Money Orders Forms -->
+                <div class="form-card" data-category="money">
+                    <div class="form-icon">💰</div>
+                    <h3>Money Order Application Form</h3>
+                    <p>Send money securely within Sri Lanka or internationally using our money order services.</p>
+                    <div class="form-meta">
+                        <span class="form-size">📄 PDF • 200KB</span>
+                        <span class="form-language">EN/සිං/தමிழ்</span>
+                    </div>
+                    <a href="#" class="download-btn" aria-label="Download Money Order Application Form">
+                        ⬇️ Download PDF
+                    </a>
+                </div>
+
+                <div class="form-card" data-category="money">
+                    <div class="form-icon">🏦</div>
+                    <h3>International Money Transfer Form</h3>
+                    <p>Transfer money internationally through Sri Lanka Post's authorized money transfer services.</p>
+                    <div class="form-meta">
+                        <span class="form-size">📄 PDF • 300KB</span>
+                        <span class="form-language">EN</span>
+                    </div>
+                    <a href="#" class="download-btn" aria-label="Download International Money Transfer Form">
+                        ⬇️ Download PDF
+                    </a>
+                </div>
+
+                <!-- Courier & EMS Forms -->
+                <div class="form-card" data-category="courier">
+                    <div class="form-icon">🚚</div>
+                    <h3>EMS Dispatch Form</h3>
+                    <p>Express Mail Service form for urgent domestic and international deliveries with tracking.</p>
+                    <div class="form-meta">
+                        <span class="form-size">📄 PDF • 220KB</span>
+                        <span class="form-language">EN/සිං</span>
+                    </div>
+                    <a href="#" class="download-btn" aria-label="Download EMS Dispatch Form">
+                        ⬇️ Download PDF
+                    </a>
+                </div>
+
+                <div class="form-card" data-category="courier">
+                    <div class="form-icon">📦</div>
+                    <h3>Courier Service Registration</h3>
+                    <p>Register for regular courier services and establish a business account for bulk deliveries.</p>
+                    <div class="form-meta">
+                        <span class="form-size">📄 PDF • 350KB</span>
+                        <span class="form-language">EN/සිං/தமிழ்</span>
+                    </div>
+                    <a href="#" class="download-btn" aria-label="Download Courier Service Registration Form">
+                        ⬇️ Download PDF
+                    </a>
+                </div>
+
+                <!-- Banking Services Forms -->
+                <div class="form-card" data-category="banking">
+                    <div class="form-icon">💳</div>
+                    <h3>Postal Banking Account Opening</h3>
+                    <p>Open a postal banking account to access savings, current account, and other banking services.</p>
+                    <div class="form-meta">
+                        <span class="form-size">📄 PDF • 400KB</span>
+                        <span class="form-language">EN/සිං/தமிழ்</span>
+                    </div>
+                    <a href="#" class="download-btn" aria-label="Download Postal Banking Account Opening Form">
+                        ⬇️ Download PDF
+                    </a>
+                </div>
+
+                <div class="form-card" data-category="banking">
+                    <div class="form-icon">📊</div>
+                    <h3>EPF/ETF Payment Form</h3>
+                    <p>Process Employee Provident Fund and Employee Trust Fund payments through postal banking services.</p>
+                    <div class="form-meta">
+                        <span class="form-size">📄 PDF • 280KB</span>
+                        <span class="form-language">EN/සිං</span>
+                    </div>
+                    <a href="#" class="download-btn" aria-label="Download EPF/ETF Payment Form">
+                        ⬇️ Download PDF
+                    </a>
+                </div>
+
+                <!-- Other Services Forms -->
+                <div class="form-card" data-category="other">
+                    <div class="form-icon">🏠</div>
+                    <h3>PO Box Rental Application</h3>
+                    <p>Apply for a post office box rental for secure mail collection at your nearest post office.</p>
+                    <div class="form-meta">
+                        <span class="form-size">📄 PDF • 150KB</span>
+                        <span class="form-language">EN/සිං/தமிழ்</span>
+                    </div>
+                    <a href="#" class="download-btn" aria-label="Download PO Box Rental Application Form">
+                        ⬇️ Download PDF
+                    </a>
+                </div>
+
+                <div class="form-card" data-category="other">
+                    <div class="form-icon">📝</div>
+                    <h3>Complaint & Feedback Form</h3>
+                    <p>Submit complaints, suggestions, or feedback about Sri Lanka Post services and operations.</p>
+                    <div class="form-meta">
+                        <span class="form-size">📄 PDF • 160KB</span>
+                        <span class="form-language">EN/සිං/தமிழ்</span>
+                    </div>
+                    <a href="#" class="download-btn" aria-label="Download Complaint & Feedback Form">
+                        ⬇️ Download PDF
+                    </a>
+                </div>
+
+                <div class="form-card" data-category="other">
+                    <div class="form-icon">🎯</div>
+                    <h3>Bulk Mail Service Application</h3>
+                    <p>Apply for bulk mail services for businesses, organizations, and marketing campaigns.</p>
+                    <div class="form-meta">
+                        <span class="form-size">📄 PDF • 320KB</span>
+                        <span class="form-language">EN</span>
+                    </div>
+                    <a href="#" class="download-btn" aria-label="Download Bulk Mail Service Application Form">
+                        ⬇️ Download PDF
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Help Section

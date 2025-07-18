@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latest Notices and Updates - Sri Lanka Post</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+
+        /* Header Navigation */
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .top-header {
+            background: rgba(0,0,0,0.1);
+            padding: 8px 0;
+            font-size: 14px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .top-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .lang-selector {
+            display: flex;
+            gap: 10px;
+        }
+
+        .lang-selector a {
+            color: white;
+            text-decoration: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .lang-selector a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .main-nav {
+            padding: 15px 0;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #2a5298;
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            align-items: center;
+            gap: 26px;
+            height: 100%;
+        }
+
+        .nav-item {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            transition: all 0.3s;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            line-height: 1.2;
+            font-size: 16px;
+        }
+
+        .nav-link:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-2px);
+        }
+
+        .nav-link.active {
+            background: rgba(255,255,255,0.2);
+            border-bottom: 3px solid #ffd700;
+        }
+
+        .dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            border-radius: 8px;
+            min-width: 250px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+
+        .nav-item:hover .dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            padding: 12px 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item a {
+            color: #333;
+            text-decoration: none;
+            display: block;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .dropdown-item a:hover {
+            color: #2a5298;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .search-box {
+            display: flex;
+            background: rgba(255,255,255,0.1);
+            border-radius: 25px;
+            padding: 8px 15px;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .search-box:focus-within {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .search-box input {
+            background: none;
+            border: none;
+            color: white;
+            outline: none;
+            width: 200px;
+            font-size: 14px;
+        }
+
+        .search-box input::placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 4px;
+            transition: background 0.3s;
+            line-height: 1;
+        }
+
+        .mobile-menu-toggle:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .page-header p {
+            font-size: 16px;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .breadcrumb {
+            background: rgba(255,255,255,0.1);
+            padding: 12px 0;
+            margin-bottom: 20px;
+        }
+
+        .breadcrumb-nav {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+        }
+
+        .breadcrumb-nav a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .breadcrumb-nav a:hover {
+            color: white;
+        }
+
+        .breadcrumb-nav span {
+            color: #ffd700;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 60px 0;
+        }
+
+        .notices-section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .filter-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .filter-button {
+            padding: 10px 20px;
+            border: 2px solid #2a5298;
+            background: white;
+            color: #2a5298;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .filter-button:hover,
+        .filter-button.active {
+            background: #2a5298;
+            color: white;
+        }
+
+        .notices-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .notice-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-left: 4px solid #2a5298;
+        }
+
+        .notice-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .notice-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            gap: 15px;
+        }
+
+        .notice-category {
+            background: #e8f4f8;
+            color: #2a5298;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .notice-date {
+            color: #666;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+
+        .notice-card h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #333;
+            line-height: 1.4;
+        }
+
+        .notice-description {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .notice-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .notice-link {
+            color: #2a5298;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: color 0.3s;
+        }
+
+        .notice-link:hover {
+            color: #1e3c72;
+            text-decoration: underline;
+        }
+
+        .notice-priority {
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .priority-high {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .priority-medium {
+            background: #fff3e0;
+            color: #ef6c00;
+        }
+
+        .priority-low {
+            background: #e8f5e8;
+            color: #2e7d32;
+        }
+
+        .important-notice {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4a 100%);
+            border-left: 4px solid #ff6b35;
+            color: #333;
+        }
+
+        .important-notice .notice-category {
+            background: rgba(255,255,255,0.3);
+            color: #333;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 40px;
+        }
+
+        .pagination-button {
+            padding: 12px 20px;
+            border: 2px solid #2a5298;
+            background: white;
+            color: #2a5298;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .pagination-button:hover,
+        .pagination-button.active {
+            background: #2a5298;
+            color: white;
+        }
+
+        .pagination-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .load-more-btn {
+            display: block;
+            margin: 40px auto 0;
+            padding: 15px 30px;
+            background: #2a5298;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .load-more-btn:hover {
+            background: #1e3c72;
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        .footer {
+            background: #1e3c72;
+            color: white;
+            padding: 40px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 20px;
+            color: #ffd700;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section ul li a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section ul li a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 20px;
+            text-align: center;
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .top-info {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+
+            .lang-selector {
+                justify-content: center;
+            }
+
+            .nav-content {
+                position: relative;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: #1e3c72;
+                flex-direction: column;
+                padding: 100px 20px 20px;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+                overflow-y: auto;
+                z-index: 999;
+            }
+
+            .nav-menu.active {
+                transform: translateX(0);
+            }
+
+            .nav-item {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+
+            .nav-link {
+                width: 100%;
+                justify-content: flex-start;
+                padding: 15px 20px;
+                border-radius: 8px;
+            }
+
+            .dropdown {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                box-shadow: none;
+                background: rgba(255,255,255,0.1);
+                margin-top: 10px;
+                border-radius: 8px;
+                display: none;
+            }
+
+            .dropdown.active {
+                display: block;
+            }
+
+            .dropdown-item a {
+                color: rgba(255,255,255,0.9);
+                padding: 10px 15px;
+            }
+
+            .mobile-menu-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .search-box {
+                display: none;
+            }
+
+            .logo-text {
+                font-size: 20px;
+            }
+
+            .page-header h1 {
+                font-size: 28px;
+            }
+
+            .notices-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .notice-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .notice-footer {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .filter-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .pagination {
+                flex-wrap: wrap;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            .logo {
+                gap: 10px;
+            }
+
+            .logo-icon {
+                width: 40px;
+                height: 40px;
+            }
+
+            .logo-text {
+                font-size: 18px;
+            }
+
+            .page-header {
+                padding: 30px 0;
+            }
+
+            .page-header h1 {
+                font-size: 24px;
+            }
+
+            .notice-card {
+                padding: 20px;
+            }
+
+            .main-content {
+                padding: 40px 0;
+            }
+
+            .footer {
+                padding: 30px 0 15px;
+            }
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* Focus styles for accessibility */
+        .nav-link:focus,
+        .search-box input:focus,
+        .filter-button:focus,
+        .notice-link:focus,
+        .pagination-button:focus,
+        .load-more-btn:focus,
+        .mobile-menu-toggle:focus {
+            outline: 2px solid #ffd700;
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header class="header">
+        <div class="top-header">
+            <div class="container">
+                <div class="top-info">
+                    <div class="lang-selector">
+                        <a href="#" aria-label="Switch to English">EN</a>
+                        <a href="#" aria-label="Switch to Sinhala">සිං</a>
+                        <a href="#" aria-label="Switch to Tamil">தமிழ்</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <nav class="main-nav" role="navigation" aria-label="Main navigation">
+            <div class="container">
+                <div class="nav-content">
+                    <div class="logo">
+                        <div class="logo-icon">SL</div>
+                        <div class="logo-text">Sri Lanka Post</div>
+                    </div>
+                    
+                    <ul class="nav-menu" id="navMenu">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">About Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link nav-dropdown-trigger">Services</a>
+                            <div class="dropdown">
+                                <div class="dropdown-item">
+                                    <a href="#">Domestic Mail</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#">International Mail</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#">Money Orders</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#">Courier Services</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#">EMS Services</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#">Bill Payments</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#">Banking Services</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">Track & Trace</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link active" aria-current="page">Notices</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">Contact Us</a>
+                        </li>
+                    </ul>
+                    
+                    <div class="search-container">
+                        <div class="search-box">
+                            <span>🔍</span>
+                            <input type="text" placeholder="Search notices..." aria-label="Search notices">
+                        </div>
+                        <button class="mobile-menu-toggle" aria-label="Toggle mobile menu" id="mobileMenuToggle">
+                            ☰
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <div class="breadcrumb">
+                <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+                    <a href="#">Home</a>
+                    <span>→</span>
+                    <span>Notices</span>
+                </nav>
+            </div>
+            <h1>Latest Notices and Updates</h1>
+            <p>Stay informed about the latest postal services updates, new procedures, service interruptions, and important announcements from Sri Lanka Post.</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Filter Controls -->
+            <div class="filter-controls">
+                <a href="#" class="filter-button active" data-filter="all">All Notices</a>
+                <a href="#" class="filter-button" data-filter="important">Important</a>
+                <a href="#" class="filter-button" data-filter="service">Service Updates</a>
+                <a href="#" class="filter-button" data-filter="general">General</a>
+                <a href="#" class="filter-button" data-filter="holiday">Holiday Schedule</a>
+            </div>
+
+            <!-- Notices Grid -->
+            <div class="notices-grid">
+                <!-- Important Notice -->
+                <article class="notice-card important-notice">
+                    <div class="notice-header">
+                        <span class="notice-category">Important</span>
+                        <span class="notice-date">July 15, 2025</span>
+                    </div>
+                    <h3>Service Interruption - Colombo Central Post Office</h3>
+                    <p class="notice-description">Due to maintenance work, the Colombo Central Post Office will have limited services from July 20-22, 2025. Alternative locations and temporary arrangements are available.</p>
+                    <div class="notice-footer">
+                        <a href="#" class="notice-link">Read More →</a>
+                        <span class="notice-priority priority-high">High</span>
+                    </div>
+                </article>
+
+                <!-- Service Update -->
+                <article class="notice-card">
+                    <div class="notice-header">
+                        <span class="notice-category">Service Update</span>
+                        <span class="notice-date">July 12, 2025</span>
+                    </div>
+                    <h3>New EMS Express Service to Australia and New Zealand</h3>
+                    <p class="notice-description">We're excited to announce faster delivery times for EMS services to Australia and New Zealand. New transit times and pricing are now in effect.</p>
+                    <div class="notice-footer">
+                        <a href="#" class="notice-link">Read More →</a>
+                        <span class="notice-priority priority-medium">Medium</span>
+                    </div>
+                </article>
+
+                <!-- General Notice -->
+                <article class="notice-card">
+                    <div class="notice-header">
+                        <span class="notice-category">General</span>
+                        <span class="notice-date">July 10, 2025</span>
+                    </div>
+                    <h3>Updated Money Order Limits and Fees</h3>
+                    <p class="notice-description">Effective August 1, 2025, new limits and fee structures for domestic and international money orders will come into effect. Please review the updated rates.</p>
+                    <div class="notice-footer">
+                        <a href="#" class="notice-link">Read More →</a>
+                        <span class="notice-priority priority-low">Low</span>
+                    </div>
+                </article>
+
+                <!-- Holiday Schedule -->
+                <article class="notice-card">
+                    <div class="notice-header">
+                        <span class="notice-category">Holiday Schedule</span>
+                        <span class="notice-date">July 8, 2025</span>
+                    </div>
+                    <h3>Postal Services During Esala Poya Holiday</h3>
+                    <p class="notice-description">Special arrangements for postal services during the Esala Poya holiday period. Limited services will be available at selected locations.</p>
+                    <div class="notice-footer">
+                        <a href="#" class="notice-link">Read More →</a>
+                        <span class="notice-priority priority-medium">Medium</span>
+                    </div>
+                </article>
+
+                <!-- Service Update -->
+                <article class="notice-card">
+                    <div class="notice-header">
+                        <span class="notice-category">Service Update</span>
+                        <span class="notice-date">July 5, 2025</span>
+                    </div>
+                    <h3>Enhanced Tracking System for Domestic Parcels</h3>
+                    <p class="notice-description">Our new tracking system provides real-time updates for domestic parcels. Track your packages with improved accuracy and detailed status information.</p>
+                    <div class="notice-footer">
+                        <a href="#" class="notice-link">Read More →</a>
+                        <span class="notice-priority priority-low">Low</span>
+                    </div>
+                </article>
+
+                <!-- General Notice -->
+                <article class="notice-card">
+                    <div class="notice-header">
+                        <span class="notice-category">General</span>
+                        <span class="notice-date">July 3, 2025</span>
+                    </div>
+                    <h3>New Branch Opening - Nugegoda</h3>
+                    <p class="notice-description">We're pleased to announce the opening of our new branch in Nugegoda. Full postal services including courier, money orders, and bill payments are now available.</p>
+                    <div class="notice-footer">
+                        <a href="#" class="notice-link">Read More →</a>
+                        <span class="notice-priority priority-low">Low</span>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Load More Button -->
+            <button class="load-more-btn" onclick="loadMoreNotices()">
+                Load More Notices
+            </button>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                <a href="#" class="pagination-button" aria-label="Previous page">← Previous</a>
+                <a href="#" class="pagination-button active" aria-current="page">1</a>
+                <a href="#" class="pagination-button">2</a>
+                <a href="#" class="pagination-button">3</a>
+                <a href="#" class="pagination-button" aria-label="Next page">Next →</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Services</h3>
+                    <ul>
+                        <li><a href="#">Domestic Mail</a></li>
+                        <li><a href="#">International Mail</a></li>
+                        <li><a href="#">Money Orders</a></li>
+                        <li><a href="#">Courier Services</a></li>
+                        <li><a href="#">EMS Services</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Customer Support</h3>
+                    <ul>
+                        <li><a href="#">Track & Trace</a></li>
+                        <li><a href="#">Customer Care</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Complaints</a></li>
+                        <li><a href="#">Branch Locator</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>About</h3>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Our History</a></li>
+                        <li><a href="#">Leadership</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">News & Updates</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li>📍 No. 310, D.R.Wijewardena Mawatha</li>
+                        <li>Colombo 01000, Sri Lanka</li>
+                        <li>📞 +94-112328301-3</li>
+                        <li>✉️ info@slpost.lk</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Department of Posts, Sri Lanka. All rights
